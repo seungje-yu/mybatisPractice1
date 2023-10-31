@@ -25,4 +25,20 @@ public class PrintResult {
 
         System.out.println(errorMessage);
     }
+
+    public void printMember(MemberDTO member) {
+
+        System.out.println(member);
+    }
+
+    public void printSuccessMessage(String successCode) {
+
+        String successMessage = "";
+        switch (successCode) {
+            case "insert" : successMessage = "신규 멤버 등록을 성공하였습니다"; break;
+            case "update" : successMessage = "멤버 수정을 성공하였습니다"; break;
+            case "delete" : successMessage = "멤버 삭제를 성공하였습니다"; break;
+        }
+        System.out.println(successMessage);
+    }
 }

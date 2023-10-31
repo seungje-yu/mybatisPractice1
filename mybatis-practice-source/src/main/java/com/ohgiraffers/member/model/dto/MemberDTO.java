@@ -6,7 +6,7 @@ public class MemberDTO {
 
     private int code;
     private String name;
-    private Date birthDate;
+    private String birthDate;
     private String region;
     private String contact;
     private String activeStatus;
@@ -14,7 +14,7 @@ public class MemberDTO {
     public MemberDTO() {
     }
 
-    public MemberDTO(int code, String name, Date birthDate, String region, String contact, String activeStatus) {
+    public MemberDTO(int code, String name, String birthDate, String region, String contact, String activeStatus) {
         this.code = code;
         this.name = name;
         this.birthDate = birthDate;
@@ -39,11 +39,11 @@ public class MemberDTO {
         this.name = name;
     }
 
-    public Date getBirthDate() {
+    public String getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
     }
 
@@ -76,7 +76,7 @@ public class MemberDTO {
         return "MemberDTO{" +
                 "code=" + code +
                 ", name='" + name + '\'' +
-                ", birthDate=" + birthDate +
+                ", birthDate='" + birthDate + '\'' +
                 ", region='" + region + '\'' +
                 ", contact='" + contact + '\'' +
                 ", activeStatus='" + activeStatus + '\'' +
