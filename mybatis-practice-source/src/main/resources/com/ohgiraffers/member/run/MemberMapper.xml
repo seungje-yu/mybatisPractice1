@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+    mapper는
+    1. dao 인터페이스와 동일한 패키지에 위치해야한다.
+    2. dao 인터페이스의 풀네임은 namespace로 지정해야한다.
+    3. mapper 인터페이스와 xml의 이름이 동일해야한다.
+    4. 작성한 메소드의 이름과 id가 일치하고, 리턴 타입이 일치하는 쿼리문을 모두 작성해야한다.
+
+ -->
+<mapper namespace="com.ohgiraffers.member.run.MemberMapper" >
+
+    <resultMap id="memberResultMap" type="com.ohgiraffers.member.run.MemberDTO">
+        <id property="code" column="MEMBER_CODE"/>
+        <result property="name" column="MEMBER_NAME"/>
+        <result property="date" column="BIRTH_DATE"/>
+        <result property="detail" column="DETAIL_INFO"/>
+        <result property="contact" column="CONTACT"/>
+        <result property="activeStatus" column="ACTIVE_STATUS"/>
+    </resultMap>
+    <!--
+        resultType : 이미 정의 되어 있는 타입을 이용하여 리턴 타입으로 이용하는 경우
+        resultMap : 위에서 생성한 resultMap을 리턴 타입으로 이용하는 경우
+    -->
+    <select id="selectAllMember" resultMap="memberResultMap">
+        SELECT
+            member_code,
+            member_name,
+            birth_date,
+            detail_info,
+            contact,
+            active_status
+        FROM
+            member_info
+
+    </select>
+
+    <select id="selectMemberByCode" resultMap="memberResultMap">
+        SELECT
+        member_code,
+        member_name,
+        birth_date,
+        detail_info,
+        contact,
+        active_status
+        FROM
+            member_info
+        WHERE
+            member_code = #{ code }
+    </select>
+
+    <!--insert, update,delete의 경우 resultType은 작성하지 않고, 기본_int로 수행 결과를 반환한다.
+    파라미터로 전달된 DTO의 필드명으로 값을 바인딩 해야 한다. 파라미터 타입도 생략이 가능하다.-->
+    <!--parameterType="com.ohgiraffers.section01.xmlconfig.MenuDTO" 생략가능 -->
+    <insert id="insertMember">
+        INSERT
+            INTO member_info (
+                member_name,
+                birth_date,
+                detail_info,
+                contact,
+                active_status
+
+        )
+        VALUES(
+                #{ name },
+                #{ date },
+                #{ detail },
+                #{ contact },
+                'Y'
+
+        )
+
+    </insert>
+    <update id="updateMember">
+        UPDATE member_info
+        SET
+                member_name = #{ name },
+                birth_date = #{ date },
+                detail_info = #{ detail },
+                contact = #{ contact }
+
+        WHERE
+                member_code = #{ code }
+
+    </update>
+    <delete id="deleteMember">
+        DELETE
+            FROM member_info
+        WHERE
+            member_code = #{ code }
+    </delete>
+
+
+</mapper>
