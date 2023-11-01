@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ohgiraffers.member.mapper.MemberMapper">
+
+    <resultMap id="memberResultMap" type="com.ohgiraffers.member.model.dto.MemberDTO">
+        <id property="code" column="MEMBER_CODE"/>
+        <result property="name" column="MEMBER_NAME"/>
+        <result property="birthDate" column="BIRTH_DATE"/>
+        <result property="address" column="DETAIL_INFO"/>
+        <result property="phone" column="CONTACT"/>
+        <result property="activeStatus" column="ACTIVE_STATUS"/>
+
+    </resultMap>
+
+    <select id="selectAllMember" resultMap="memberResultMap">
+
+        SELECT
+            member_code,
+            member_name,
+            birth_date,
+            detail_info,
+            contact,
+            active_status
+        FROM
+            member_info
+    </select>
+
+    <select id="selectMemberCode" resultMap="memberResultMap" >
+
+        SELECT
+            member_code,
+            member_name,
+            birth_date,
+            detail_info,
+            contact,
+            active_status
+        FROM
+            member_info
+        WHERE MEMBER_CODE = #{ code }
+    </select>
+
+    <insert id="registMember">
+
+        INSERT INTO
+            member_info(
+                        member_name,
+                        birth_date,
+                        detail_info,
+                        contact,
+                        active_status
+                                )
+        VALUES (
+                #{ name },
+                #{ birthDate },
+                #{ address },
+                #{ phone },
+                'Y'
+                )
+    </insert>
+
+    <update id="modifyMember">
+
+        UPDATE
+            member_info
+        SET
+            member_code = #{ code },
+            member_name = #{ name },
+            birth_date = #{ birthDate},
+            detail_info = #{ address },
+            contact = #{ phone },
+            active_status = 'Y'
+        WHERE
+            member_code = #{ code }
+    </update>
+    <delete id="deleteMember">
+
+        DELETE
+        FROM member_info
+        WHERE
+            member_code = #{ code }
+
+    </delete>
+
+    </mapper>
