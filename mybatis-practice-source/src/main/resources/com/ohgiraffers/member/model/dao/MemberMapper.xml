@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ohgiraffers.member.model.dao.MemberMapper">
+    <resultMap id="memberResultMap" type="com.ohgiraffers.member.model.dto.MemberDTO">
+        <id property="memberCode" column="MEMBER_CODE"/>
+        <id property="memberName" column="MEMBER_NAME"/>
+        <id property="birthDate" column="BIRTH_DATE"/>
+        <id property="detailInfo" column="DETAIL_INFO"/>
+        <id property="contact" column="CONTACT"/>
+        <id property="activeStatus" column="ACTIVE_STATUS"/>
+    </resultMap>
+
+    <select id="selectAllMember" resultMap="memberResultMap">
+        SELECT
+                MEMBER_CODE,
+                MEMBER_NAME,
+                BIRTH_DATE,
+                DETAIL_INFO,
+                CONTACT,
+                ACTIVE_STATUS
+        FROM    member_info
+        WHERE   ACTIVE_STATUS = 'Y'
+        ORDER BY MEMBER_CODE
+
+    </select>
+    <select id="selectMemberByCode" parameterType="_int" resultMap="memberResultMap">
+        SELECT
+        MEMBER_CODE,
+        MEMBER_NAME,
+        BIRTH_DATE,
+        DETAIL_INFO,
+        CONTACT,
+        ACTIVE_STATUS
+        FROM    member_info
+        WHERE   ACTIVE_STATUS = 'Y'
+        AND     MEMBER_CODE = #{ code }
+
+    </select>
+    <insert id="insertMember" parameterType="com.ohgiraffers.member.model.dto.MemberDTO">
+        INSERT
+        INTO member_info(
+                        MEMBER_NAME,
+                        BIRTH_DATE,
+                        DETAIL_INFO,
+                        CONTACT,
+                        ACTIVE_STATUS
+                        )
+        VALUES(
+        #{ memberName },
+        #{ birthDate },
+        #{ detailInfo },
+        #{ contact },
+        'Y'
+        )
+
+    </insert>
+    <update id="updateMember">
+        UPDATE member_info
+        set
+        MEMBER_NAME = #{ memberName },
+        BIRTH_DATE = #{ birthDate },
+        DETAIL_INFO = #{ detailInfo },
+        CONTACT = #{ contact }
+        WHERE MEMBER_CODE = #{ memberCode }
+    </update>
+
+    <delete id="deleteMember" parameterType="_int">
+        DELETE
+        FROM    member_info
+        WHERE   MEMBER_CODE = #{ memberCode }
+
+    </delete>
+
+
+
+
+</mapper>
