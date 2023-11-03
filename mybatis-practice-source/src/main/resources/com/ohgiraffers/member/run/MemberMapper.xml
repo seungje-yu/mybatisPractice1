@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ohgiraffers.member.run.MemberMapper">
+    <resultMap id="memberResultMap" type="com.ohgiraffers.member.run.MemberDTO">
+        <id property="memberNo" column="memberNo"/>
+        <result property="memberName" column="memberName"/>
+        <result property="gender" column="gender"/>
+        <result property="age" column="age"/>
+        <result property="address" column="address"/>
+        <result property="phoneNum" column="phoneNum"/>
+    </resultMap>
+
+    <select id="selectAllMember" resultMap="memberResultMap">
+        SELECT
+            memberNo,
+            memberName,
+            gender,
+            age,
+            address,
+            phoneNum
+        FROM
+            member
+    </select>
+
+    <select id="selectMemberByCode" parameterType="_int" resultMap="memberResultMap">
+        SELECT
+            memberNo,
+            memberName,
+            gender,
+            age,
+            address,
+            phoneNum
+        FROM
+            member
+        WHERE memberNo=#{memberNo}
+
+    </select>
+
+    <insert id="insertMember" parameterType="com.ohgiraffers.member.run.MemberDTO">
+        INSERT
+        INTO member(
+            memberName,
+            gender,
+            age,
+            address,
+            phoneNum
+        )
+        VALUES(
+            #{memberName},
+            #{gender},
+            #{age},
+            #{address},
+            #{phoneNum}
+        )
+    </insert>
+
+    <update id="updateMember">
+        UPDATE member
+        SET
+                memberName=#{memberName},
+                age=#{age},
+                gender=#{gender},
+                address=#{address},
+                phoneNum=#{phoneNum}
+        WHERE memberNo=#{memberNo}
+    </update>
+
+    <delete id="deleteMember" parameterType="_int">
+        DELETE
+        FROM member
+        WHERE memberNo=#{memberNo}
+    </delete>
+</mapper>
+
