@@ -1,6 +1,14 @@
 package com.ohgiraffers.member.view;
 
+import com.ohgiraffers.member.DTO.MemberDTO;
+import com.ohgiraffers.member.controller.MemberController;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
 public class MemberView {
+
 
     public void displayView() {
 
@@ -14,5 +22,96 @@ public class MemberView {
         ==========================================
         멤버의 조회 결과의 결럼
         */
+
+        Scanner sc = new Scanner(System.in);
+        MemberController memberController = new MemberController();
+
+
+        do{
+            System.out.println("==================== 멤버 관리 ====================");
+            System.out.println("1. 멤버 전체 조회");
+            System.out.println("2. 멤버 코드로 조회");
+            System.out.println("3. 신규 멤버 추가");
+            System.out.println("4. 멤버 수정");
+            System.out.println("5. 멤버 삭제");
+
+            System.out.print("멤버 관리 번호를 입력해주세요 : ");;
+            int no = sc.nextInt();
+
+            switch (no){
+                case 1 : memberController.selectAllMember(); break;
+                case 2 : memberController.selectMemberByCode(inputMemberCode()); break;
+                case 3 : memberController.insertNewMember(inputMember());  break;
+                case 4 : memberController.updateMember(inputUpdateMember());  break;
+                case 5 : memberController.deleteMember(inputMemberCode()); break;
+
+            }
+
+        } while(true);
+
     }
+
+    private static Map<String, String> inputUpdateMember() {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("수정할 멤버 코드를 입력하세요 : ");
+        String code = sc.nextLine();
+        System.out.print("수정할 멤버 이름을 입력하세요 : ");
+        String name = sc.nextLine();
+        System.out.print("수정할 멤버 생일을 입력하세요 : ");
+        String date = sc.nextLine();
+        System.out.print("수정할 멤버 주소를 입력하세요 : ");
+        String detailInfo = sc.nextLine();
+        System.out.print("수정할 멤버 전화번호를 입력하세요 : ");
+        String contact = sc.nextLine();
+
+        Map<String, String> parameter = new HashMap<>();
+
+        parameter.put("code", code);
+        parameter.put("name", name);
+        parameter.put("date", date);
+        parameter.put("detailInfo", detailInfo);
+        parameter.put("contact", contact);
+
+        return parameter;
+    }
+
+    private static Map<String, String> inputMember() {
+
+        Scanner sc = new Scanner(System.in);
+        System.out.print("신규 멤버 이름을 입력하세요 : ");
+        String name = sc.nextLine();
+        System.out.print("신규 멤버 생일을 입력하세요 : ");
+        String date = sc.nextLine();
+        System.out.print("신규 멤버 주소를 입력하세요 : ");
+        String detailInfo = sc.nextLine();
+        System.out.print("신규 멤버 전화번호를 입력하세요 : ");
+        String contact = sc.nextLine();
+
+        Map<String, String> parameter = new HashMap<>();
+
+        parameter.put("name", name);
+        parameter.put("date", date);
+        parameter.put("detailInfo", detailInfo);
+        parameter.put("contact", contact);
+
+        return parameter;
+
+    }
+
+
+    private static Map<String, String> inputMemberCode() {
+
+        Scanner sc = new Scanner(System.in);
+        System.out.print("멤버 코드 번호를 입력하세요 : ");
+        String code = sc.nextLine();
+
+        Map<String, String> parameter = new HashMap<>();
+        parameter.put("code", code);
+
+        return parameter;
+    }
+
+
 }
