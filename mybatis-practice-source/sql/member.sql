@@ -1,5 +1,7 @@
 -- root 계정에서
+
 create database memberdb;
+
 
 grant all privileges on memberdb.* to ohgiraffers@'%';
 --
@@ -31,3 +33,5 @@ INSERT INTO MEMBER_INFO (MEMBER_NAME,BIRTH_DATE,DETAIL_INFO,CONTACT,ACTIVE_STATU
 INSERT INTO MEMBER_INFO (MEMBER_NAME,BIRTH_DATE,DETAIL_INFO,CONTACT,ACTIVE_STATUS) VALUES
     ('이순신','84/03/31','마산시','010-1331-5117','Y');
 COMMIT;
+
+select * from member_info;
