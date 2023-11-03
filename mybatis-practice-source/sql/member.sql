@@ -1,4 +1,5 @@
 -- root 계정에서
+
 create database memberdb;
 
 grant all privileges on memberdb.* to ohgiraffers@'%';
