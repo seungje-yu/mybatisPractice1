@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ohgiraffers.member.model.dao.MemberMapper">
+
+    <resultMap id="memberResultMap" type="com.ohgiraffers.member.model.dto.MemberDTO">
+        <id property="memberCode" column="MEMBER_CODE"/>
+        <result property="memberName" column="MEMBER_NAME"/>
+        <result property="detailDate" column="BIRTH_DATE"/>
+        <result property="detailInfo" column="DETAIL_INFO"/>
+        <result property="contact" column="CONTACT"/>
+        <result property="activeStatus" column="ACTIVE_STATUS"/>
+    </resultMap>
+
+    <select id="selectAllMember" resultMap="memberResultMap">
+        SELECT
+                MEMBER_CODE,
+                MEMBER_NAME,
+                BIRTH_DATE,
+                DETAIL_INFO,
+                CONTACT,
+                ACTIVE_STATUS
+        FROM    member_info
+        WHERE   ACTIVE_STATUS = 'Y'
+        ORDER BY MEMBER_CODE
+    </select>
+
+
+    <select id="selectMemberByCode" parameterType="_int" resultMap="memberResultMap">
+        SELECT
+                MEMBER_CODE,
+                MEMBER_NAME,
+                BIRTH_DATE,
+                DETAIL_INFO,
+                CONTACT,
+                ACTIVE_STATUS
+        FROM    member_info
+        WHERE   ACTIVE_STATUS = 'Y'
+        AND     MEMBER_CODE = #{ code }
+        ORDER BY MEMBER_CODE
+    </select>
+
+    <insert id="insertMember" parameterType="com.ohgiraffers.member.model.dto.MemberDTO">
+        INSERT
+                INTO member_info (
+                        MEMBER_NAME,
+                        BIRTH_DATE,
+                        DETAIL_INFO,
+                        CONTACT,
+                        ACTIVE_STATUS
+                    )
+        VALUES (
+                    #{ memberName },
+                    #{ detailDate },
+                    #{ detailInfo},
+                    #{ contact},
+                    #{ activeStatus}
+                    )
+    </insert>
+    <insert id="updateMember">
+        UPDATE   member_info
+        SET         MEMBER_NAME= #{ newName },
+                    BIRTH_DATE= #{ detailDate },
+                    DETAIL_INFO= #{ detailInfo },
+                    CONTACT= #{ contact },
+                    ACTIVE_STATUS= #{ activeStatus }
+        WHERE    MEMBER_NAME = #{ memberName }
+    </insert>
+    <insert id="deleteMember">
+        DELETE FROM member_info
+        WHERE MEMBER_NAME = #{memberName}
+        ORDER BY MEMBER_CODE
+    </insert>
+
+</mapper>
